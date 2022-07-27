@@ -9,16 +9,6 @@
     tools:context=".MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <com.udacity.LoadingButton
-        android:id="@+id/custom_button"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_margin="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
-
     <ImageView
         android:id="@+id/downloadImage"
         android:layout_width="match_parent"
@@ -28,5 +18,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_baseline_cloud_download_24" />
+
+    <com.udacity.LoadingButton
+        android:id="@+id/custom_button"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_margin="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/downloadImage" />
+    
 
 </androidx.constraintlayout.widget.ConstraintLayout>
