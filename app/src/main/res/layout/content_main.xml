@@ -19,15 +19,40 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_baseline_cloud_download_24" />
 
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_margin="20dp"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/downloadImage">
+
+        <RadioButton
+            android:id="@+id/radioButton1"
+            style="@style/RadioStyle"
+            android:text="@string/loadGlide"/>
+
+        <RadioButton
+            android:id="@+id/radioButton2"
+            style="@style/RadioStyle"
+            android:text="@string/loadUdacity" />
+
+        <RadioButton
+            android:id="@+id/radioButton3"
+            style="@style/RadioStyle"
+            android:text="@string/loadRetrofit" />
+    </RadioGroup>
+
     <com.udacity.LoadingButton
         android:id="@+id/custom_button"
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_margin="20dp"
+        android:background="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/downloadImage" />
-    
-
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
 </androidx.constraintlayout.widget.ConstraintLayout>
