@@ -65,7 +65,9 @@ class MainActivity : AppCompatActivity() {
                 CHANNEL_ID,
                 channelName,
                 NotificationManager.IMPORTANCE_LOW
-            )
+            ) .apply {
+                setShowBadge(false)
+            }
 
             val notificationManager = applicationContext.getSystemService(
                 NotificationManager::class.java
