@@ -9,6 +9,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.net.Uri
 import android.os.Bundle
+import android.widget.RadioButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
@@ -38,8 +39,14 @@ class MainActivity : AppCompatActivity() {
                     applicationContext, getString(R.string.selectFile),
                     Toast.LENGTH_SHORT
                 ).show()
+            } else {
+                val radioButton = radioGroup.findViewById(id) as RadioButton
+                when (radioButton.text) {
+                    getString(R.string.loadGlide) -> download(URL_GLIDE)
+                    getString(R.string.loadUdacity) -> download(URL_UDACITY)
+                    getString(R.string.loadRetrofit) -> download(URL_RETROFIT)
+                }
             }
-            download()
         }
     }
 
@@ -49,9 +56,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun download() {
+    private fun download(url: String) {
         val request =
-            DownloadManager.Request(Uri.parse(URL_UDACITY))
+            DownloadManager.Request(Uri.parse(url))
                 .setTitle(getString(R.string.app_name))
                 .setDescription(getString(R.string.app_description))
                 .setRequiresCharging(false)
