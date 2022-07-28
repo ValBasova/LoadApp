@@ -32,8 +32,12 @@ fun NotificationManager.sendNotification(
                 .getString(R.string.notification_title)
         )
         .setContentText(messageBody)
-        .setContentIntent(contentPendingIntent)
         .setAutoCancel(true)
+        .addAction(
+            R.drawable.ic_baseline_cloud_download_24,
+            applicationContext.getString(R.string.open_details),
+            contentPendingIntent
+        )
 
     notify(NOTIFICATION_ID, builder.build())
 }
