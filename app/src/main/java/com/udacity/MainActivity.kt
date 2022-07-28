@@ -1,6 +1,7 @@
 package com.udacity
 
 import android.app.DownloadManager
+import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
@@ -9,12 +10,13 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.database.Cursor
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.widget.RadioButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 
@@ -52,11 +54,35 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+        createChannel(
+            getString(R.string.channel_name)
+        )
+    }
+
+    private fun createChannel(channelName: String) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val notificationChannel = NotificationChannel(
+                CHANNEL_ID,
+                channelName,
+                NotificationManager.IMPORTANCE_LOW
+            )
+
+            val notificationManager = applicationContext.getSystemService(
+                NotificationManager::class.java
+            )
+            notificationManager.createNotificationChannel(notificationChannel)
+        }
     }
 
     private val receiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             val id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
+
+            val notificationManager = ContextCompat.getSystemService(
+                applicationContext,
+                NotificationManager::class.java
+            ) as NotificationManager
+
             if (id == downloadID) {
                 val cursor: Cursor? =
                     downloadManager?.query(DownloadManager.Query().setFilterById(downloadID))
@@ -66,7 +92,11 @@ class MainActivity : AppCompatActivity() {
                             cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS));
                         when (status) {
                             DownloadManager.STATUS_SUCCESSFUL -> {
-                                Log.e("MainActivity Cursor Status: ", "SUCCESSFUL")
+                                notificationManager.sendNotification(
+                                    applicationContext.getString(R.string.notification_description),
+                                    applicationContext,
+                                    CHANNEL_ID
+                                )
                             }
                             DownloadManager.STATUS_FAILED -> {
 
