@@ -119,6 +119,13 @@ class MainActivity : AppCompatActivity() {
                 .setAllowedOverRoaming(true)
         downloadID =
             downloadManager?.enqueue(request) ?: 0// enqueue puts the download request in the queue.
+
+        val notificationManager =
+            ContextCompat.getSystemService(
+                applicationContext,
+                NotificationManager::class.java
+            ) as NotificationManager
+        notificationManager.cancelNotifications()
     }
 
     companion object {
