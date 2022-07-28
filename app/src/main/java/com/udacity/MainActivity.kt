@@ -7,8 +7,10 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.widget.RadioButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -20,6 +22,7 @@ import kotlinx.android.synthetic.main.content_main.*
 class MainActivity : AppCompatActivity() {
 
     private var downloadID: Long = 0
+    private var downloadManager: DownloadManager? = null
 
     private lateinit var notificationManager: NotificationManager
     private lateinit var pendingIntent: PendingIntent
@@ -31,6 +34,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         registerReceiver(receiver, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
+        downloadManager = getSystemService(DOWNLOAD_SERVICE) as DownloadManager
 
         custom_button.setOnClickListener {
             val id: Int = radioGroup.checkedRadioButtonId
@@ -53,6 +57,25 @@ class MainActivity : AppCompatActivity() {
     private val receiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             val id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
+            if (id == downloadID) {
+                val cursor: Cursor? =
+                    downloadManager?.query(DownloadManager.Query().setFilterById(downloadID))
+                if (cursor != null) {
+                    if (cursor.moveToFirst()) {
+                        val status =
+                            cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS));
+                        when (status) {
+                            DownloadManager.STATUS_SUCCESSFUL -> {
+                                Log.e("MainActivity Cursor Status: ", "SUCCESSFUL")
+                            }
+                            DownloadManager.STATUS_FAILED -> {
+
+                            }
+                        }
+
+                    }
+                }
+            }
         }
     }
 
@@ -64,10 +87,8 @@ class MainActivity : AppCompatActivity() {
                 .setRequiresCharging(false)
                 .setAllowedOverMetered(true)
                 .setAllowedOverRoaming(true)
-
-        val downloadManager = getSystemService(DOWNLOAD_SERVICE) as DownloadManager
         downloadID =
-            downloadManager.enqueue(request)// enqueue puts the download request in the queue.
+            downloadManager?.enqueue(request) ?: 0// enqueue puts the download request in the queue.
     }
 
     companion object {
