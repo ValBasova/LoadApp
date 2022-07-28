@@ -99,7 +99,10 @@ class MainActivity : AppCompatActivity() {
                                 )
                             }
                             DownloadManager.STATUS_FAILED -> {
-
+                                Toast.makeText(
+                                    applicationContext, getString(R.string.failedDownload),
+                                    Toast.LENGTH_LONG
+                                ).show()
                             }
                         }
 
