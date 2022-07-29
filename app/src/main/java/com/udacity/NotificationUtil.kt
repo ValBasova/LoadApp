@@ -11,10 +11,14 @@ private val NOTIFICATION_ID = 0
 fun NotificationManager.sendNotification(
     messageBody: String,
     applicationContext: Context,
-    channelId: String
+    channelId: String,
+    fileName: String,
+    isSuccess: Boolean
 ) {
 
     val contentIntent = Intent(applicationContext, DetailActivity::class.java)
+    contentIntent.putExtra("fileName", fileName)
+    contentIntent.putExtra("status", isSuccess)
     val contentPendingIntent = PendingIntent.getActivity(
         applicationContext,
         NOTIFICATION_ID,

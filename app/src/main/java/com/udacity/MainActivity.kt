@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var notificationManager: NotificationManager
     private lateinit var pendingIntent: PendingIntent
     private lateinit var action: NotificationCompat.Action
+    private lateinit var selectedRadioText: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +48,8 @@ class MainActivity : AppCompatActivity() {
                 ).show()
             } else {
                 val radioButton = radioGroup.findViewById(id) as RadioButton
-                when (radioButton.text) {
+                selectedRadioText = radioButton.text.toString()
+                when (selectedRadioText) {
                     getString(R.string.loadGlide) -> download(URL_GLIDE)
                     getString(R.string.loadUdacity) -> download(URL_UDACITY)
                     getString(R.string.loadRetrofit) -> download(URL_RETROFIT)
@@ -65,7 +67,7 @@ class MainActivity : AppCompatActivity() {
                 CHANNEL_ID,
                 channelName,
                 NotificationManager.IMPORTANCE_LOW
-            ) .apply {
+            ).apply {
                 setShowBadge(false)
             }
 
@@ -97,7 +99,9 @@ class MainActivity : AppCompatActivity() {
                                 notificationManager.sendNotification(
                                     applicationContext.getString(R.string.notification_description),
                                     applicationContext,
-                                    CHANNEL_ID
+                                    CHANNEL_ID,
+                                    selectedRadioText,
+                                    true
                                 )
                             }
                             DownloadManager.STATUS_FAILED -> {
@@ -107,7 +111,6 @@ class MainActivity : AppCompatActivity() {
                                 ).show()
                             }
                         }
-
                     }
                 }
             }

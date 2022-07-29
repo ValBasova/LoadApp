@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_detail.*
+import kotlinx.android.synthetic.main.content_detail.*
 
 class DetailActivity : AppCompatActivity() {
 
@@ -18,6 +19,12 @@ class DetailActivity : AppCompatActivity() {
             NotificationManager::class.java
         ) as NotificationManager
         notificationManager.cancelAll()
+
+        val fileName = intent.getStringExtra("fileName")
+        urlNameLabel.text = fileName
+
+        val isSuccess = intent.getBooleanExtra("status", false)
+        statusValueLabel.text = if (isSuccess) "Success" else "Fail"
     }
 
 }
