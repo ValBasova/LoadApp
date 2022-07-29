@@ -105,10 +105,13 @@ class MainActivity : AppCompatActivity() {
                                 )
                             }
                             DownloadManager.STATUS_FAILED -> {
-                                Toast.makeText(
-                                    applicationContext, getString(R.string.failedDownload),
-                                    Toast.LENGTH_LONG
-                                ).show()
+                                notificationManager.sendNotification(
+                                    applicationContext.getString(R.string.notification_description),
+                                    applicationContext,
+                                    CHANNEL_ID,
+                                    selectedRadioText,
+                                    false
+                                )
                             }
                         }
                     }
