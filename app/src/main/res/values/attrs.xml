@@ -2,6 +2,7 @@
 <resources>
     <declare-styleable name="LoadingButton">
         <attr name="downloadColor" format="color" />
+        <attr name="loadingColor" format="color" />
         <attr name="textColor" format="color" />
     </declare-styleable>
 </resources>

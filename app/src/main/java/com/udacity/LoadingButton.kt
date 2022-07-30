@@ -16,8 +16,6 @@ class LoadingButton @JvmOverloads constructor(
     private var widthSize = 0
     private var heightSize = 0
 
-    private val valueAnimator = ValueAnimator()
-
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
         textAlign = Paint.Align.CENTER
@@ -26,16 +24,27 @@ class LoadingButton @JvmOverloads constructor(
     }
 
     private var downloadBackgroundColor = 0
+    private var loadingBackgroundColor = 0
+    private var animatedProgress = 0f
     private var textColor = 0
 
-    private var buttonState: ButtonState by Delegates.observable<ButtonState>(ButtonState.Completed) { p, old, new ->
-
+    var buttonState: ButtonState by Delegates.observable<ButtonState>(ButtonState.Completed) { p, old, new ->
+        if (buttonState == ButtonState.Loading) {
+            val valueAnimator = ValueAnimator.ofFloat(0f, widthSize.toFloat())
+            valueAnimator.duration = 3000
+            valueAnimator.addUpdateListener {
+                animatedProgress = valueAnimator.animatedValue as Float
+                invalidate()
+            }
+            valueAnimator.start()
+        }
     }
 
 
     init {
         context.withStyledAttributes(attrs, R.styleable.LoadingButton) {
             downloadBackgroundColor = getColor(R.styleable.LoadingButton_downloadColor, 0)
+            loadingBackgroundColor = getColor(R.styleable.LoadingButton_loadingColor, 0)
             textColor = getColor(R.styleable.LoadingButton_textColor, 0)
         }
     }
@@ -49,6 +58,10 @@ class LoadingButton @JvmOverloads constructor(
         paint.color = textColor
         val label = resources.getString(R.string.download)
         canvas?.drawText(label, (widthSize / 2).toFloat(), (heightSize / 2).toFloat(), paint)
+
+        paint.color = loadingBackgroundColor
+        canvas?.drawRect(0f, 0f, animatedProgress, heightSize.toFloat(), paint)
+
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {

@@ -121,6 +121,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun download(url: String) {
+        custom_button.buttonState = ButtonState.Loading
         val request =
             DownloadManager.Request(Uri.parse(url))
                 .setTitle(getString(R.string.app_name))
@@ -137,6 +138,7 @@ class MainActivity : AppCompatActivity() {
                 NotificationManager::class.java
             ) as NotificationManager
         notificationManager.cancelNotifications()
+        custom_button.buttonState = ButtonState.Completed
     }
 
     companion object {
