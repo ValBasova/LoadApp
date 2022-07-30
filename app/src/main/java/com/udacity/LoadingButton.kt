@@ -21,11 +21,12 @@ class LoadingButton @JvmOverloads constructor(
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
         textAlign = Paint.Align.CENTER
-        textSize = 35.0f
+        textSize = 55.0f
         typeface = Typeface.create("", Typeface.BOLD)
     }
 
     private var downloadBackgroundColor = 0
+    private var textColor = 0
 
     private var buttonState: ButtonState by Delegates.observable<ButtonState>(ButtonState.Completed) { p, old, new ->
 
@@ -35,6 +36,7 @@ class LoadingButton @JvmOverloads constructor(
     init {
         context.withStyledAttributes(attrs, R.styleable.LoadingButton) {
             downloadBackgroundColor = getColor(R.styleable.LoadingButton_downloadColor, 0)
+            textColor = getColor(R.styleable.LoadingButton_textColor, 0)
         }
     }
 
@@ -43,6 +45,10 @@ class LoadingButton @JvmOverloads constructor(
         super.onDraw(canvas)
         paint.color = downloadBackgroundColor
         canvas?.drawRect(0f, 0f, widthSize.toFloat(), heightSize.toFloat(), paint)
+
+        paint.color = textColor
+        val label = resources.getString(R.string.download)
+        canvas?.drawText(label, (widthSize / 2).toFloat(), (heightSize / 2).toFloat(), paint)
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
