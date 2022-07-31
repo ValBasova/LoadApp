@@ -25,5 +25,6 @@
     <string name="ok">OK</string>
     <string name="open_details">Open Details</string>
     <string name="download">Download</string>
+    <string name="weAreLoading">We are loading</string>
 
 </resources>

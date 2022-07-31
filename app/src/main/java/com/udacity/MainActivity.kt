@@ -138,7 +138,6 @@ class MainActivity : AppCompatActivity() {
                 NotificationManager::class.java
             ) as NotificationManager
         notificationManager.cancelNotifications()
-        custom_button.buttonState = ButtonState.Completed
     }
 
     companion object {

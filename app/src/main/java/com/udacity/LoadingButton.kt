@@ -35,6 +35,9 @@ class LoadingButton @JvmOverloads constructor(
             valueAnimator.addUpdateListener {
                 animatedProgress = valueAnimator.animatedValue as Float
                 invalidate()
+                if (animatedProgress == widthSize.toFloat()) {
+                    buttonState = ButtonState.Completed
+                }
             }
             valueAnimator.start()
         }
@@ -55,14 +58,28 @@ class LoadingButton @JvmOverloads constructor(
         paint.color = downloadBackgroundColor
         canvas?.drawRect(0f, 0f, widthSize.toFloat(), heightSize.toFloat(), paint)
 
-        paint.color = textColor
-        val label = resources.getString(R.string.download)
-        canvas?.drawText(label, (widthSize / 2).toFloat(), (heightSize / 2).toFloat(), paint)
+        when (buttonState) {
+            ButtonState.Loading -> drawLoadingAnimation(canvas)
+            ButtonState.Completed -> drawDefaultAnimation(canvas)
+        }
+    }
 
+    private fun drawLoadingAnimation(canvas: Canvas?) {
         paint.color = loadingBackgroundColor
         canvas?.drawRect(0f, 0f, animatedProgress, heightSize.toFloat(), paint)
 
+        paint.color = textColor
+        val label = resources.getString(R.string.weAreLoading)
+        canvas?.drawText(label, (widthSize / 2).toFloat(), (heightSize / 2).toFloat(), paint)
+
     }
+
+    private fun drawDefaultAnimation(canvas: Canvas?) {
+        paint.color = textColor
+        val label = resources.getString(R.string.download)
+        canvas?.drawText(label, (widthSize / 2).toFloat(), (heightSize / 2).toFloat(), paint)
+    }
+
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         val minw: Int = paddingLeft + paddingRight + suggestedMinimumWidth
