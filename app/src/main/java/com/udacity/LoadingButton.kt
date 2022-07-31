@@ -4,6 +4,7 @@ import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
+import android.graphics.RectF
 import android.graphics.Typeface
 import android.util.AttributeSet
 import android.view.View
@@ -72,6 +73,12 @@ class LoadingButton @JvmOverloads constructor(
         val label = resources.getString(R.string.weAreLoading)
         canvas?.drawText(label, (widthSize / 2).toFloat(), (heightSize / 2).toFloat(), paint)
 
+        val x = width * 0.75f
+        val y = height / 4f
+        val oval = RectF(x, y, x + height / 2f, height - y)
+
+        paint.color = textColor
+        canvas?.drawArc(oval, 0f, animatedProgress/widthSize*360, true, paint)
     }
 
     private fun drawDefaultAnimation(canvas: Canvas?) {
