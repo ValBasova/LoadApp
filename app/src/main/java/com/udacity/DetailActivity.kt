@@ -1,6 +1,7 @@
 package com.udacity
 
 import android.app.NotificationManager
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -30,6 +31,11 @@ class DetailActivity : AppCompatActivity() {
         } else {
             statusValueLabel.text = getString(R.string.fail)
             statusValueLabel.setTextColor(getColor(R.color.red))
+        }
+
+        okButton.setOnClickListener {
+            val intent = Intent(applicationContext, MainActivity::class.java)
+            startActivity(intent)
         }
     }
 }
