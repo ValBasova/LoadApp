@@ -24,7 +24,12 @@ class DetailActivity : AppCompatActivity() {
         urlNameLabel.text = fileName
 
         val isSuccess = intent.getBooleanExtra("status", false)
-        statusValueLabel.text = if (isSuccess) "Success" else "Fail"
+        if (isSuccess) {
+            statusValueLabel.text = getString(R.string.success)
+            statusValueLabel.setTextColor(getColor(R.color.colorPrimaryDark))
+        } else {
+            statusValueLabel.text = getString(R.string.fail)
+            statusValueLabel.setTextColor(getColor(R.color.red))
+        }
     }
-
 }
