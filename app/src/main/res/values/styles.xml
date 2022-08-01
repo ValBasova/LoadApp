@@ -27,7 +27,6 @@
     </style>
 
     <style name="TextStyle">
-        <item name="android:layout_marginTop">@dimen/layout_margin</item>
         <item name="android:textSize">@dimen/normal_text_size</item>
         <item name="android:ems">10</item>
         <item name="android:minHeight">48dp</item>

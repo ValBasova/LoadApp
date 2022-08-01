@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="@dimen/layout_margin"
-    android:layout_marginBottom="@dimen/layout_margin"
+    android:layout_margin="@dimen/layout_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".DetailActivity"
     tools:showIn="@layout/activity_detail"
@@ -14,7 +13,7 @@
     <TextView
         android:id="@+id/fileNameLabel"
         style="@style/TextStyle"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/file_name"
         app:layout_constraintBaseline_toBaselineOf="@+id/urlNameLabel"
@@ -24,7 +23,7 @@
     <TextView
         android:id="@+id/statusLabel"
         style="@style/TextStyle"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/status"
         app:layout_constraintBaseline_toBaselineOf="@+id/statusValueLabel"
@@ -34,26 +33,29 @@
     <TextView
         android:id="@+id/urlNameLabel"
         style="@style/TextStyle"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text=""
+        android:textColor="@color/colorPrimaryDark"
         tools:text="@string/loadRetrofit" />
 
     <TextView
         android:id="@+id/statusValueLabel"
         style="@style/TextStyle"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text=""
+        android:textColor="@color/colorPrimaryDark"
         tools:text="@string/success" />
 
     <Button
         android:id="@+id/okButton"
+        style="@style/TextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/layout_margin"
-        android:minHeight="48dp"
         android:text="@string/ok"
+        android:background="@color/colorAccent"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
